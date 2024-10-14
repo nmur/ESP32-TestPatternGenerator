@@ -13,7 +13,7 @@
 
 #include "src/patterns/colorBars.h"
 
-const int VIDEO_FORMAT_PARAM_ADDR = 0;  // EEPROM address to store parameter choice
+const int VIDEO_FORMAT_PARAM_ADDR = 0; 
 const int VIDEO_FORMAT_PARAM_SIZE = 4;
 int videoFormatValue = CompositeColorOutput::NTSC;
 
@@ -23,21 +23,9 @@ CompositeColorOutput composite(CompositeColorOutput::NTSC);
 Image<CompositeGraphics> colorBars0(colorBars::xres, colorBars::yres, colorBars::pixels);
 
 const int videoFormatPin = 2;
-int buttonState = HIGH;      // Current state of the button
-int lastButtonState = HIGH;  // Previous state of the button
-unsigned long lastDebounceTime = 0;  // The last time the button state changed
-unsigned long debounceDelay = 50;    // Debounce time in milliseconds
 
 void setup() {
-
-  EEPROM.begin(VIDEO_FORMAT_PARAM_SIZE);
-  EEPROM.get(VIDEO_FORMAT_PARAM_ADDR, videoFormatValue);
-  
-  if (videoFormatValue == 1) {
-    composite = CompositeColorOutput(CompositeColorOutput::NTSC);
-  } else {
-    composite = CompositeColorOutput(CompositeColorOutput::PAL);
-  }
+  setVideoFormatFromEeprom();
 
   esp_pm_lock_handle_t powerManagementLock;
   esp_pm_lock_create(ESP_PM_CPU_FREQ_MAX, 0, "compositeCorePerformanceLock", &powerManagementLock);
@@ -61,31 +49,30 @@ void loop() {
   drawImage();
   composite.sendFrameHalfResolution(&graphics.frame);
 
-  int reading = digitalRead(videoFormatPin);  // Read the state of the button
+  checkVideoFormatButtonPress();
+}
+
+void setVideoFormatFromEeprom() {
+  EEPROM.begin(VIDEO_FORMAT_PARAM_SIZE);
+  EEPROM.get(VIDEO_FORMAT_PARAM_ADDR, videoFormatValue);
   
-  // Check if the button state has changed
-  if (reading != lastButtonState) {
-    lastDebounceTime = millis();  // Record the time the button state changed
+  if (videoFormatValue == CompositeColorOutput::NTSC) {
+    composite = CompositeColorOutput(CompositeColorOutput::NTSC);
+  } else {
+    composite = CompositeColorOutput(CompositeColorOutput::PAL);
   }
+}
 
-  // Only change the button state if the debounce time has passed
-  if ((millis() - lastDebounceTime) > debounceDelay) {
-    if (reading != buttonState) {
-      buttonState = reading;
-
-      // If the button state is LOW, it means the button is pressed
-      if (buttonState == LOW) {
-        if (videoFormatValue == 0) {
-          EEPROM.put(VIDEO_FORMAT_PARAM_ADDR, CompositeColorOutput::NTSC); 
-        } else {
-          EEPROM.put(VIDEO_FORMAT_PARAM_ADDR, CompositeColorOutput::PAL);  
-        }
-        EEPROM.commit();
-        esp_restart();
-      }
+void checkVideoFormatButtonPress() {
+  if (digitalRead(videoFormatPin) == LOW) {
+    if (videoFormatValue == CompositeColorOutput::PAL) {
+      EEPROM.put(VIDEO_FORMAT_PARAM_ADDR, CompositeColorOutput::NTSC); 
+    } else {
+      EEPROM.put(VIDEO_FORMAT_PARAM_ADDR, CompositeColorOutput::PAL);  
     }
+    EEPROM.commit();
+    delay(200);
+    esp_restart();
   }
-
-  lastButtonState = reading;  // Save the current state as the last state for the next loop
 }
 
