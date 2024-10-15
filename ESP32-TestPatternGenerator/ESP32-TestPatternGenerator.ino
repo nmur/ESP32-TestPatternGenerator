@@ -11,7 +11,11 @@
 #include "src/gfx/CompositeColorOutput.h"
 #include "src/gfx/Image.h"
 
-#include "src/patterns/colorBars.h"
+#include "src/patterns/ColorBars.h"
+#include "src/patterns/Grid.h"
+#include "src/patterns/Gradients.h"
+#include "src/patterns/Circles.h"
+#include "src/patterns/White.h"
 
 const int VIDEO_FORMAT_PARAM_ADDR = 0; 
 const int VIDEO_FORMAT_PARAM_SIZE = 4;
@@ -20,7 +24,13 @@ int videoFormatValue = CompositeColorOutput::NTSC;
 CompositeGraphics graphics(CompositeColorOutput::XRES, CompositeColorOutput::YRES);
 CompositeColorOutput composite(CompositeColorOutput::NTSC);
 
-Image<CompositeGraphics> colorBars0(colorBars::xres, colorBars::yres, colorBars::pixels);
+Image<CompositeGraphics> testPatterns[] = {
+    Image<CompositeGraphics>(colorBars::xres, colorBars::yres, colorBars::pixels),
+    Image<CompositeGraphics>(grid::xres, grid::yres, grid::pixels),
+    Image<CompositeGraphics>(gradients::xres, gradients::yres, gradients::pixels),
+    Image<CompositeGraphics>(circles::xres, circles::yres, circles::pixels),
+    //Image<CompositeGraphics>(white::xres, white::yres, white::pixels) // sync issues
+};
 
 const int videoFormatPin = 2;
 
@@ -37,17 +47,31 @@ void setup() {
   pinMode(videoFormatPin, INPUT_PULLUP);
 }
 
-void drawImage() {
+void drawImage(Image<CompositeGraphics> image) {
   graphics.begin(0);
 
-  colorBars0.draw(graphics, 0, 0);
+  image.draw(graphics, 0, 0);
   
   graphics.end();
+
+  composite.sendFrameHalfResolution(&graphics.frame);
 }
 
 void loop() {
-  drawImage();
-  composite.sendFrameHalfResolution(&graphics.frame);
+  int index = 0;
+  int arraySize = sizeof(testPatterns) / sizeof(testPatterns[0]); 
+
+  while (true) {  
+    drawImage(testPatterns[index]);
+    
+    index++;
+
+    if (index >= arraySize) {
+        index = 0;
+    }
+
+    delay(2000);
+  }
 
   checkVideoFormatButtonPress();
 }
