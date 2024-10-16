@@ -32,7 +32,11 @@ Image<CompositeGraphics> testPatterns[] = {
     //Image<CompositeGraphics>(white::xres, white::yres, white::pixels) // sync issues
 };
 
+int testpatternIndex = 0;
+int testpatternArraySize = sizeof(testPatterns) / sizeof(testPatterns[0]); 
+
 const int videoFormatPin = 2;
+const int testpatternPin = 15;
 
 void setup() {
   setVideoFormatFromEeprom();
@@ -45,6 +49,7 @@ void setup() {
   graphics.init();
 
   pinMode(videoFormatPin, INPUT_PULLUP);
+  pinMode(testpatternPin, INPUT_PULLUP);
 }
 
 void drawImage(Image<CompositeGraphics> image) {
@@ -58,22 +63,10 @@ void drawImage(Image<CompositeGraphics> image) {
 }
 
 void loop() {
-  int index = 0;
-  int arraySize = sizeof(testPatterns) / sizeof(testPatterns[0]); 
+  drawImage(testPatterns[testpatternIndex]);
 
-  while (true) {  
-    drawImage(testPatterns[index]);
-    
-    index++;
-
-    if (index >= arraySize) {
-        index = 0;
-    }
-
-    delay(2000);
-  }
-
-  checkVideoFormatButtonPress();
+  checkAndHandleVideoFormatButtonPress();
+  checkAndHandleTestPatternButtonPress();
 }
 
 void setVideoFormatFromEeprom() {
@@ -87,7 +80,7 @@ void setVideoFormatFromEeprom() {
   }
 }
 
-void checkVideoFormatButtonPress() {
+void checkAndHandleVideoFormatButtonPress() {
   if (digitalRead(videoFormatPin) == LOW) {
     if (videoFormatValue == CompositeColorOutput::PAL) {
       EEPROM.put(VIDEO_FORMAT_PARAM_ADDR, CompositeColorOutput::NTSC); 
@@ -97,6 +90,16 @@ void checkVideoFormatButtonPress() {
     EEPROM.commit();
     delay(200);
     esp_restart();
+  }
+}
+
+void checkAndHandleTestPatternButtonPress() {
+  if (digitalRead(testpatternPin) == LOW) {
+    testpatternIndex++;
+
+    if (testpatternIndex >= testpatternArraySize) {
+        testpatternIndex = 0;
+    }
   }
 }
 
