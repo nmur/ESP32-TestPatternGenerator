@@ -36,7 +36,12 @@ int testpatternIndex = 0;
 int testpatternArraySize = sizeof(testPatterns) / sizeof(testPatterns[0]); 
 
 const int videoFormatPin = 2;
+
 const int testpatternPin = 15;
+unsigned long testpatternLastDebounceTime = 0;   
+unsigned long testpatternDebounceDelay = 50;     
+int testpatternLastButtonState = HIGH;          
+int testpatternCurrentButtonState = HIGH;  
 
 void setup() {
   setVideoFormatFromEeprom();
@@ -94,12 +99,23 @@ void checkAndHandleVideoFormatButtonPress() {
 }
 
 void checkAndHandleTestPatternButtonPress() {
-  if (digitalRead(testpatternPin) == LOW) {
-    testpatternIndex++;
+  int buttonState = digitalRead(testpatternPin); 
 
-    if (testpatternIndex >= testpatternArraySize) {
-        testpatternIndex = 0;
-    }
+  if (buttonState != testpatternLastButtonState) {
+    testpatternLastDebounceTime = millis();
   }
+
+  if ((millis() - testpatternLastDebounceTime) > testpatternDebounceDelay) {
+    if (buttonState == LOW && testpatternCurrentButtonState == HIGH) {
+      testpatternIndex++;  
+      if (testpatternIndex >= testpatternArraySize) {
+        testpatternIndex = 0;  
+      }
+    }
+
+    testpatternCurrentButtonState = buttonState;
+  }
+
+  testpatternLastButtonState = buttonState;
 }
 
