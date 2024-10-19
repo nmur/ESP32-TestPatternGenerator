@@ -51,3 +51,7 @@ Currently the available colours are limited to a palette of 256 colours. As such
 WIP
 
 - Use version 1.0.6 of the ESP32 board manager
+
+## Acknowledgements
+
+WIP
