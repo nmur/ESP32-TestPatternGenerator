@@ -36,6 +36,8 @@ Is the CH340/CHXXX driver required? Seems like it
 
 > Web Serial is available in Google Chrome and Microsoft Edge browsers
 
+[Installation page](https://nmur.github.io/ESP32-TestPatternGenerator-WebInstaller/)
+
 Alternative binary upload?
 ## How to Use
 
