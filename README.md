@@ -32,13 +32,8 @@ The schematic is available [here](https://raw.githubusercontent.com/nmur/ESP32-T
 
 WIP
 
-Is the CH340/CHXXX driver required? Seems like it
+Navigate to the [Installation page](https://nmur.github.io/ESP32-TestPatternGenerator-WebInstaller/) to connect to your device and flash the firmware from your browser directly.
 
-> Web Serial is available in Google Chrome and Microsoft Edge browsers
-
-[Installation page](https://nmur.github.io/ESP32-TestPatternGenerator-WebInstaller/)
-
-Alternative binary upload?
 ## How to Use
 
 Power the device using USB or and LiPo battery, and connect the composite cable to you CRT TV. Cycle through test patterns with the `Pattern` button, and toggle between video formats with the `PAL/NTSC` button. 
@@ -50,10 +45,15 @@ Currently the available colours are limited to a palette of 256 colours. As such
 
 ## Compiling
 
-WIP
-
-- Use version 1.0.6 of the ESP32 board manager
+1. Clone the repository
+2. Open the `ESP32-TestPatternGenerator.ino` file with the Arduino IDE
+3. Install version 1.0.6 of the ESP32 board manager
+4. Connect your device via USB
+5. Build and upload the program
 
 ## Acknowledgements
 
-WIP
+- [bitluni](https://www.youtube.com/@bitluni) for his original [ESP32CompositeVideo](https://github.com/bitluni/ESP32CompositeVideo) project
+- [marciot](https://github.com/marciot) for his [ESP32CompositeColorVideo](https://github.com/marciot/ESP32CompositeColorVideo) library forked from the original project above
+- [rossumur](https://github.com/rossumur) for his work on the [ESP_8_BIT](https://github.com/rossumur/esp_8_bit) project
+- [Artemio Urbina](https://github.com/ArtemioUrbina) for his test patterns 
