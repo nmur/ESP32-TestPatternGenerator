@@ -1,6 +1,6 @@
 # ESP32-TestPatternGenerator
 
-[![demonstration](./img/demonstration_thumb.jpg)](./img/demonstration.jpg)    [![board](./img/board_thumb.jpg)](./img/board.jpg)
+[![demonstration](./img/demonstration_thumb.jpg)](./img/demonstration.jpg)    [![board](./img/board_thumb2.jpg)](./img/board.jpg)
 
 This is a simple test pattern generator that runs on the ESP32 microcontroller and utilises the [ESP32CompositeColorVideo](https://github.com/marciot/ESP32CompositeColorVideo) library to output composite video using either the PAL and NTSC video formats. 
 
