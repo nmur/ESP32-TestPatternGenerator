@@ -1,5 +1,7 @@
 # ESP32-TestPatternGenerator
 
+[![demonstration](./img/demonstration_thumb.jpg)](./img/demonstration.jpg)    [![board](./img/board_thumb.jpg)](./img/board.jpg)
+
 This is a simple test pattern generator that runs on the ESP32 microcontroller and utilises the [ESP32CompositeColorVideo](https://github.com/marciot/ESP32CompositeColorVideo) library to output composite video using either the PAL and NTSC video formats. 
 
 This tool is aimed to be used as a quick and portable was of performing tests of basic functionality for CRT TVs.
@@ -7,7 +9,7 @@ This tool is aimed to be used as a quick and portable was of performing tests of
 Its main features are:
 - **Cheap**: Approximately <$10 USD in parts
 - **Accessible**: Open source. Only a few components so soldering is easy for a first timer.
-- **Small**: Roughly 2x3"/45x70mm in size.
+- **Small**: Roughly 2x3"/45x80mm in size.
 - **Fast**: Boots and changes patterns instantly.
 - **Portable**: Very low power draw, works with a powerbank or rechargeable LiPo battery.
 
@@ -30,9 +32,7 @@ The circuit is simple enough that a PCB isn't necessary, especially if you would
 The schematic is available [here](https://raw.githubusercontent.com/nmur/ESP32-TestPatternGenerator/refs/heads/main/img/schematic.png).
 ## Uploading the Firmware
 
-WIP
-
-Navigate to the [Installation page](https://nmur.github.io/ESP32-TestPatternGenerator-WebInstaller/) to connect to your device and flash the firmware from your browser directly.
+Navigate to the [Installation page](https://nmur.github.io/ESP32-TestPatternGenerator-WebInstaller/) to connect to your device and flash the firmware from your browser directly. You'll need to install [CH340 drivers](https://www.wch-ic.com/downloads/CH341SER_ZIP.html) in order
 
 ## How to Use
 
