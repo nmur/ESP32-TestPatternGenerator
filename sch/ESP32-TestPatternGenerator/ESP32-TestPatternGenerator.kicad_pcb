@@ -575,6 +575,8 @@
       (net 18 "unconnected-(LOLIND32-GND-Pad17)") (pinfunction "Ext") (pintype "passive") (solder_mask_margin 0.102) (tstamp 6fb95656-39df-48b0-9f67-b7ba84606f7e))
   )
 
+  (gr_rect (start 110.49 134.62) (end 116.84 139.7)
+    (stroke (width 0.15) (type default)) (fill none) (layer "F.SilkS") (tstamp 1ee78699-91b5-4d21-abf8-e2683f008d1b))
   (gr_arc (start 87.63 139.7) (mid 86.731974 139.328026) (end 86.36 138.43)
     (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (tstamp 073b7754-63e8-4d96-bf85-2f9fd68c8456))
   (gr_arc (start 128.27 71.12) (mid 129.168026 71.491974) (end 129.54 72.39)
@@ -2281,6 +2283,12 @@
         )
       )
     )
+  )
+  (gr_text "JLCJLCJLCJLC" (at 101.6 119.38 90) (layer "F.SilkS") (tstamp ba21cedc-2225-4ccc-a787-54bce66e7ddd)
+    (effects (font (size 1 1) (thickness 0.15)) (justify left bottom))
+  )
+  (gr_text "USB" (at 112.014 133.858) (layer "F.SilkS") (tstamp c1be847d-351c-4c10-a274-49e36a8a75b2)
+    (effects (font (size 1 1) (thickness 0.15)) (justify left bottom))
   )
 
   (segment (start 99.06 81.86) (end 99.06 109.22) (width 0.5) (layer "B.Cu") (net 1) (tstamp 12f81c66-c15c-465c-b66f-28ed69dbee58))
