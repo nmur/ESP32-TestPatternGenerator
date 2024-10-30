@@ -12,6 +12,7 @@ Its main features are:
 - **Small**: Roughly 2x3"/45x80mm in size.
 - **Fast**: Boots and changes patterns instantly.
 - **Portable**: Very low power draw, works with a powerbank or rechargeable LiPo battery.
+- **Versatile**: Supports NTSC and PAL, and provides multiple test patterns.
 
 For a similar tool aimed at 15kHz RGB video, see the [RP2040-TestPatternGenerator](https://github.com/nmur/RP2040-TestPatternGenerator).
 ## BOM
