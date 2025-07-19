@@ -38,6 +38,8 @@ int testpatternArraySize = sizeof(testPatterns) / sizeof(testPatterns[0]);
 const int videoFormatPin = 2;
 
 const int testpatternPin = 15;
+const int testpatternPin2 = 15; // second pin to support boards without GPIO15
+
 unsigned long testpatternLastDebounceTime = 0;   
 unsigned long testpatternDebounceDelay = 50;     
 int testpatternLastButtonState = HIGH;          
